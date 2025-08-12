@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Menu By Hoang Hai — MobileConfig Builder</title>
+<style>
+  :root{
+    --glass: rgba(255,255,255,0.06);
+    --muted: rgba(255,255,255,0.7);
+    --accent: linear-gradient(90deg,#7c4dff,#3a7bff);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background-image: url("https://files.catbox.moe/a2co2w.jpeg");
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+    font-size:14px;
+    color:#eaf2ff;
+  }
+  .wrap{
+    width:100%; max-width:980px;
+    background: linear-gradient(180deg, rgba(2,6,23,0.68), rgba(3,9,30,0.82));
+    border-radius:14px;
+    box-shadow:0 10px 40px rgba(2,6,23,0.7);
+    padding:18px;
+    backdrop-filter: blur(8px);
+  }
+  header{display:flex; align-items:center; gap:16px; margin-bottom:12px}
+  .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#00000055,#ffffff11);display:flex;align-items:center;justify-content:center;font-weight:700}
+  h1{font-size:18px;margin:0}
+  p{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid; grid-template-columns: 1fr 420px; gap:16px}
+  .card{background:rgba(255,255,255,0.02); border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,0.03)}
+  .section{margin-bottom:12px}
+  .label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+  .row{display:flex;gap:10px;align-items:center;margin:8px 0}
+  input[type=range]{width:100%}
+  .small{font-size:12px;color:var(--muted)}
+  .btn{background:var(--accent); color:white; padding:10px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:600}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  textarea{width:100%; height:300px; background:rgba(0,0,0,0.25); color:#dbeafe; border-radius:8px; padding:12px; border:1px solid rgba(255,255,255,0.04); font-family:monospace; font-size:12px}
+  .switch{position:relative;width:46px;height:26px;background:rgba(255,255,255,0.06);border-radius:20px;cursor:pointer}
+  .knob{position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:white;transition:all .18s}
+  .switch.on{background:linear-gradient(90deg,#7c4dff,#3a7bff)}
+  .switch.on .knob{transform:translateX(20px); background:#fff}
+  footer{margin-top:12px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;align-items:center}
+  @media (max-width:940px){ .grid{grid-template-columns:1fr} textarea{height:220px} }
+</style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">HH</div>
+      <div>
+        <h1>Menu By Hoang Hai</h1>
+        <p>Builder .mobileconfig — Aim · NoRecoil · Tweak sensitivity</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="section">
+          <label class="label">Aim</label>
+          <div class="row">
+            <div style="flex:1">
+              <input id="aim" type="range" min="0.6" max="2.0" step="0.01" value="1.12">
+            </div>
+            <div style="width:70px" class="small" id="aimVal">1.12</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <label class="label">NoRecoil (recoil control)</label>
+          <div class="row">
+            <div style="flex:1">
+              <input id="recoil" type="range" min="0.35" max="1.2" step="0.01" value="0.78">
+            </div>
+            <div style="width:70px" class="small" id="recoilVal">0.78</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <label class="label">Touch sensitivity</label>
+          <div class="row">
+            <div style="flex:1">
+              <input id="vertical" type="range" min="0.4" max="1.6" step="0.01" value="0.88">
+            </div>
+            <div style="width:70px" class="small" id="vertVal">0.88</div>
+          </div>
+          <div class="row">
+            <div style="flex:1">
+              <input id="horizontal" type="range" min="0.6" max="1.6" step="0.01" value="1.02">
+            </div>
+            <div style="width:70px" class="small" id="horizVal">1.02</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <label class="label">Response time (s)</label>
+          <div class="row">
+            <div style="flex:1">
+              <input id="response" type="range" min="0.008" max="0.040" step="0.001" value="0.018">
+            </div>
+            <div style="width:70px" class="small" id="respVal">0.018</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <label class="label">Toggles</label>
+          <div class="row" style="align-items:center">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div>
+                <div class="small">Enable Aim</div>
+                <div id="aimSwitch" class="switch on" role="switch" aria-checked="true"><div class="knob"></div></div>
+              </div>
+              <div>
+                <div class="small">Enable NoRecoil</div>
+                <div id="recoilSwitch" class="switch on" role="switch" aria-checked="true"><div class="knob"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:12px 0">
+
+        <div class="section">
+          <label class="label">DNS DoH (each server = 1 payload)</label>
+          <div class="row">
+            <label style="display:flex;gap:8px;align-items:center">
+              <input id="use_cf" type="checkbox" checked> <span class="small">Aim head</span>
+            </label>
+          </div>
+          <div class="row">
+            <label style="display:flex;gap:8px;align-items:center">
+              <input id="use_gg" type="checkbox" checked> <span class="small">Norecoil Gun</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;justify-content:flex-start;margin-top:8px">
+          <button id="generate" class="btn">Generate &amp; Download</button>
+          <button id="previewBtn" class="btn ghost" style="background:transparent;border:1px solid rgba(255,255,255,0.06)">Update Preview</button>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Music</strong>
+          <div class="small">Filename: <strong id="fname">Menu_By_Hoang_Hai</strong></div>
+        </div>
+        <textarea id="preview" readonly></textarea>
+
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+          <button id="copyBtn" class="btn ghost">Chuyển Bài</button>
+          <button id="downloadBtn" class="btn">Dừng </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="small">Lưu ý: iOS yêu cầu mỗi DoH payload có trường <code>ServerURL</code>. Nếu iOS báo lỗi, thử chỉ chọn 1 DNS.</div>
+      <div class="small">Menu By Hoang Hai😪.</div>
+    </footer>
+  </div>
+
+<script>
+  // Elements
+  const aimR = document.getElementById('aim'), recoilR = document.getElementById('recoil'),
+        verticalR = document.getElementById('vertical'), horizontalR = document.getElementById('horizontal'),
+        responseR = document.getElementById('response');
+
+  const aimVal = document.getElementById('aimVal'), recoilVal = document.getElementById('recoilVal'),
+        vertVal = document.getElementById('vertVal'), horizVal = document.getElementById('horizVal'),
+        respVal = document.getElementById('respVal');
+
+  const aimSwitch = document.getElementById('aimSwitch'), recoilSwitch = document.getElementById('recoilSwitch');
+  const use_cf = document.getElementById('use_cf'), use_gg = document.getElementById('use_gg');
+
+  const preview = document.getElementById('preview'), generate = document.getElementById('generate'),
+        previewBtn = document.getElementById('previewBtn'), downloadBtn = document.getElementById('downloadBtn'),
+        copyBtn = document.getElementById('copyBtn'), fname = document.getElementById('fname');
+
+  // update labels
+  function updateLabels(){
+    aimVal.textContent = parseFloat(aimR.value).toFixed(2);
+    recoilVal.textContent = parseFloat(recoilR.value).toFixed(2);
+    vertVal.textContent = parseFloat(verticalR.value).toFixed(2);
+    horizVal.textContent = parseFloat(horizontalR.value).toFixed(2);
+    respVal.textContent = parseFloat(responseR.value).toFixed(3);
+  }
+  [aimR,recoilR,verticalR,horizontalR,responseR].forEach(el => el.addEventListener('input', ()=>{ updateLabels(); buildAndShow(); }));
+
+  // switch toggles
+  function toggleSwitch(el){
+    el.classList.toggle('on');
+    const checked = el.classList.contains('on');
+    el.setAttribute('aria-checked', checked ? 'true' : 'false');
+    buildAndShow();
+  }
+  aimSwitch.addEventListener('click', ()=> toggleSwitch(aimSwitch));
+  recoilSwitch.addEventListener('click', ()=> toggleSwitch(recoilSwitch));
+
+  // Build mobileconfig text
+  function buildMobileconfig(){
+    const header = `\n`;
+
+    return header + payloads + footer;
+  }
+
+  function buildAndShow(){ preview.value = buildMobileconfig(); }
+
+  // Initial setup
+  updateLabels();
+  buildAndShow();
+
+  // Wire events
+  document.querySelectorAll('input[type=range]').forEach(r=>{
+    r.addEventListener('input', ()=>{ updateLabels(); });
+  });
+  previewBtn.addEventListener('click', ()=> buildAndShow());
+
+  function downloadText(filename, text){
+    const blob = new Blob([text], {type: 'application/xml;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  generate.addEventListener('click', ()=>{
+    const text = buildMobileconfig();
+    const filename = 'Menu_By_Hoang_Hai.mobileconfig';
+    fname.textContent = filename;
+    downloadText(filename, text);
+  });
+
+  downloadBtn.addEventListener('click', ()=>{
+    const text = buildMobileconfig();
+    downloadText(fname.textContent || 'Menu_By_Hoang_Hai.mobileconfig', text);
+  });
+
+  copyBtn.addEventListener('click', ()=>{
+    navigator.clipboard.writeText(buildMobileconfig()).then(()=>{
+      copyBtn.textContent = 'Copied';
+      setTimeout(()=>copyBtn.textContent='Copy',900);
+    }).catch(()=>{ alert('Copy failed — use Download'); });
+  });
+
+  function updateLabels(){
+    aimVal.textContent = parseFloat(aimR.value).toFixed(2);
+    recoilVal.textContent = parseFloat(recoilR.value).toFixed(2);
+    vertVal.textContent = parseFloat(verticalR.value).toFixed(2);
+    horizVal.textContent = parseFloat(horizontalR.value).toFixed(2);
+    respVal.textContent = parseFloat(responseR.value).toFixed(3);
+    buildAndShow();
+  }
+
+  // init toggles appearance
+  [aimSwitch, recoilSwitch].forEach(sw=>{
+    // ensure class 'on' exists initially (already set in HTML)
+    sw.addEventListener('click', ()=>{ /* handled above */ });
+  });
+
+</script>
+</body>
+</html>
